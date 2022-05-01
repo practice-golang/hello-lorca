@@ -54,8 +54,9 @@ var defaultChromeArgs = []string{
 	// "--enable-automation",
 	"--password-store=basic",
 	"--use-mock-keychain",
-	"--incognito",
-	"--inprivate",
+	"--guest",
+	// "--incognito",
+	// "--inprivate",
 }
 
 // New returns a new HTML5 UI for the given URL, user profile directory, window

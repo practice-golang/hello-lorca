@@ -3,6 +3,7 @@ package main // import "hello-lorca"
 import (
 	"log"
 	"net/url"
+	"os"
 
 	"github.com/ncruces/zenity"
 	"github.com/zserge/lorca"
@@ -34,6 +35,9 @@ func dlgBrowse() {
 }
 
 func main() {
+	cwd, _ := os.Getwd()
+	profilePath := cwd + `\profile`
+
 	// Create UI with basic HTML passed via data URI
 	ui, err := lorca.New("data:text/html,"+url.PathEscape(`
 	<html>
@@ -45,7 +49,7 @@ func main() {
 			<button onclick="save()">Save</button>
 		</body>
 	</html>
-	`), "", 1024, 768)
+	`), profilePath, 1024, 768)
 	// `), "", 480, 320)
 	if err != nil {
 		log.Fatal(err)
