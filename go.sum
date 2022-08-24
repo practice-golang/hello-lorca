@@ -15,8 +15,10 @@ github.com/mattn/go-isatty v0.0.16 h1:bq3VjFmv/sOjHtdEhmkEV4x1AJtvUvOJ2PFAZ5+peK
 github.com/mattn/go-isatty v0.0.16/go.mod h1:kYGgaQfpe5nmfYZH+SKPsOc2e4SrIfOl2e/yFXSvRLM=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/practice-golang/lorca v0.0.0-20220824152203-08fc39ba9af0 h1:uZE2Z4fW+bVJZhoIsXAEazaK56wkpgTlcEcQ9WsulQs=
-github.com/practice-golang/lorca v0.0.0-20220824152203-08fc39ba9af0/go.mod h1:bAXT3yCQfD/8h6W1lE2U7ykVfZrhvxqCMCwpdyIPty8=
+github.com/practice-golang/lorca v0.0.0-20220824154141-759a451c8166 h1:YSpII8KZdJ8t8n9aSCVW4Eh0kuthU1oNlJ0FbvZXr2w=
+github.com/practice-golang/lorca v0.0.0-20220824154141-759a451c8166/go.mod h1:bAXT3yCQfD/8h6W1lE2U7ykVfZrhvxqCMCwpdyIPty8=
+github.com/practice-golang/lorca v0.0.0-20220824160859-44b0f69d1c5b h1:QquU6HxtLDwgeRkfaNQnY4cerS93CK31OQP77T/i0AY=
+github.com/practice-golang/lorca v0.0.0-20220824160859-44b0f69d1c5b/go.mod h1:bAXT3yCQfD/8h6W1lE2U7ykVfZrhvxqCMCwpdyIPty8=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=

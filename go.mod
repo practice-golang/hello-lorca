@@ -1,10 +1,10 @@
 module hello-lorca
 
-go 1.18
+go 1.19
 
 require (
 	github.com/labstack/echo/v4 v4.8.0
-	github.com/practice-golang/lorca v0.0.0-20220824152203-08fc39ba9af0
+	github.com/practice-golang/lorca v0.0.0-20220824160859-44b0f69d1c5b
 )
 
 require (

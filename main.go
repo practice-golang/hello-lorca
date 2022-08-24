@@ -15,33 +15,35 @@ import (
 //go:embed index.html
 var index []byte
 
-func main() {
-	go func() {
-		e := echo.New()
-		e.HideBanner = true
-		e.Use(middleware.CORS())
+func initEcho() {
+	e := echo.New()
+	e.HideBanner = true
+	e.Use(middleware.CORS())
 
-		e.GET("/", func(c echo.Context) error {
-			return c.HTML(http.StatusOK, string(index))
-		})
+	e.GET("/", func(c echo.Context) error {
+		return c.HTML(http.StatusOK, string(index))
+	})
 
-		e.Logger.Fatal(e.Start("127.0.0.1:1323"))
-	}()
+	e.Logger.Fatal(e.Start("127.0.0.1:1323"))
+}
 
+func initLorca() {
 	cwd, _ := os.Getwd()
 	profilePath := cwd + `\profile`
 
-	ui, err := lorca.New("", profilePath, 1024, 768)
+	// args := []string{"--ash-force-desktop"}
+	args := []string{}
+
+	ui, err := lorca.New("http://localhost:1323", profilePath, 1024, 768, args...)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer ui.Close()
 
-	ui.Load("http://localhost:1323")
-	// ui.Load("https://github.com/zserge/lorca/issues/167")
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	<-ui.Done()
+}
+
+func main() {
+	go func() { initEcho() }()
+	initLorca()
 }
