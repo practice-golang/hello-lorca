@@ -2,129 +2,50 @@ package main // import "hello-lorca"
 
 import (
 	"log"
-	"net/url"
+	"net/http"
 	"os"
 
-	"github.com/ncruces/zenity"
-	"github.com/zserge/lorca"
+	_ "embed"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/practice-golang/lorca"
 )
 
-const defaultPath = ``
+//go:embed index.html
+var index []byte
 
-func dlgInfo() {
-	// exec.Command("zenity", "--question", "--title", "WTFG", "--text", "WTWTWTWT").Run()
-	zenity.Info("All updates are complete.",
-		zenity.Title("Information"),
-		zenity.InfoIcon)
+func initEcho() {
+	e := echo.New()
+	e.HideBanner = true
+	e.Use(middleware.CORS())
 
-	// dlg, _ := zenity.Progress()
-	// time.Sleep(time.Second * 1)
-	// dlg.Complete()
-	// dlg.Close()
+	e.GET("/", func(c echo.Context) error {
+		return c.HTML(http.StatusOK, string(index))
+	})
 
+	e.Logger.Fatal(e.Start("127.0.0.1:1323"))
 }
 
-func dlgBrowse() {
-	zenity.SelectFile(
-		zenity.Filename(defaultPath),
-		zenity.FileFilters{
-			{Name: "Go files", Patterns: []string{"*.go"}},
-			{Name: "Web files", Patterns: []string{"*.html", "*.js", "*.css"}},
-			{Name: "Image files", Patterns: []string{"*.png", "*.gif", "*.ico", "*.jpg", "*.webp"}},
-		})
-}
-
-func main() {
+func initLorca() {
 	cwd, _ := os.Getwd()
 	profilePath := cwd + `\profile`
 
-	// Create UI with basic HTML passed via data URI
-	ui, err := lorca.New("data:text/html,"+url.PathEscape(`
-	<html>
-
-	<head>
-		<title>Hello</title>
-	</head>
-
-	<body>
-		<h1>Hello, world!</h1>
-		<a href="data:application/xml;charset=utf-8,your code here" download="filename.html">Save</a>
-		<input type="file">
-		<button onclick="save()">Save</button>
-
-		<button onclick="openFileBrowser()">Open file picker</button>
-		<button onclick="save()">Save</button>
-		<button onclick="saveAS()">Save as</button>
-
-		<div id="text-area">This is default text</div>
-	</body>
-	<script>
-		let fileHandle
-
-		async function openFileBrowser() {
-			[fileHandle] = await window.showOpenFilePicker()
-			const f = await fileHandle.getFile()
-			const contents = await f.text()
-
-			document.getElementById('text-area').innerText = contents
-		}
-
-		async function save() {
-			if (fileHandle == undefined) {
-				alert("File is not opened")
-				return false
-			}
-
-			const writer = await fileHandle.createWritable()
-			await writer.write(document.getElementById("text-area").innerText)
-			await writer.close()
-		}
-
-		async function saveAS() {
-			const handle = await getNewFileHandle()
-			const contents = document.getElementById("text-area").innerText
-			await writeFile(handle, contents)
-		}
-
-		async function writeFile(handle, contents) {
-
-			const writable = await handle.createWritable()
-			await writable.write(contents)
-			await writable.close()
-		}
-
-		async function getNewFileHandle() {
-			const options = {
-				types: [{
-					description: "Text Files",
-					accept: { "text/plain": [".txt"] },
-				}],
-			};
-			const handle = await window.showSaveFilePicker(options);
-			return handle;
-		}
-
-		async function writeFile(fileHandle, contents) {
-			const writable = await fileHandle.createWritable()
-			await writable.write(contents)
-			await writable.close()
-		}
-	</script>
-
-	</html>
-	`), profilePath, 1024, 768)
-	// `), "", 480, 320)
+	ui, err := lorca.New("", profilePath, 1024, 768)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer ui.Close()
 
-	ui.Bind("save", func() {
-		dlgBrowse()
-	})
+	ui.Load("http://localhost:1323")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	dlgInfo()
-
-	// Wait until UI window is closed
 	<-ui.Done()
+}
+
+func main() {
+	go func() { initEcho() }()
+	initLorca()
 }
