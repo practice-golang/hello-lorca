@@ -31,8 +31,8 @@ func initLorca() {
 	cwd, _ := os.Getwd()
 	profilePath := cwd + `\profile`
 
-	// args := []string{"--ash-force-desktop"}
-	args := []string{}
+	args := []string{"--ash-force-desktop"}
+	// args := []string{}
 
 	ui, err := lorca.New("http://localhost:1323", profilePath, 1024, 768, args...)
 	if err != nil {
