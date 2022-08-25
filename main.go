@@ -15,6 +15,9 @@ import (
 //go:embed index.html
 var index []byte
 
+//go:embed logo.png
+var logo []byte
+
 func initEcho() {
 	e := echo.New()
 	e.HideBanner = true
@@ -22,6 +25,9 @@ func initEcho() {
 
 	e.GET("/", func(c echo.Context) error {
 		return c.HTML(http.StatusOK, string(index))
+	})
+	e.GET("/logo.png", func(c echo.Context) error {
+		return c.HTML(http.StatusOK, string(logo))
 	})
 
 	e.Logger.Fatal(e.Start("127.0.0.1:1323"))
